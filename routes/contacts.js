@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const bcrypt = require("bcryptjs");
+const User = require("../models/User");
+const Contact = require("../models/Contact");
 //middleware for checking the validity of request data
 const {check, validationResult} = require('express-validator/check');
 
@@ -12,8 +14,18 @@ const config = require('config');
 // @desc     Get all users contacts
 // @access   Public
 
-router.get('/',(req,res) => {
-    res.send("Get all contacts");
+router.get('/',auth, async (req,res) => {
+
+    try{
+        //find user by checking for user.id
+        const contacts = await Contact.find({user: req.user.id}).sort({date: -1});
+        res.json(contacts);
+    }
+    catch(err){
+        console.error(err.message);
+        res.status(500).json({msg: "Server Error"})
+    }
+    //res.send("Get all contacts");
 });
 
 //@route     POST api/contacts
