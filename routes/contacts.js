@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
+const bcrypt = require("bcryptjs");
+//middleware for checking the validity of request data
+const {check, validationResult} = require('express-validator/check');
 
+//json web token
+const jwt = require('jsonwebtoken');
+const config = require('config');
 //@route     GET api/contacts
 // @desc     Get all users contacts
 // @access   Public
@@ -13,8 +20,33 @@ router.get('/',(req,res) => {
 // @desc     Add a user to contacts
 // @access   Public
 
-router.post('/',(req,res) => {
-    res.send("Add contacts");
+router.post('/',[
+    auth,[check('name', 'Name is required').not().isEmpty()]],
+    async (req,res) => {
+    //res.send("Add contacts");
+    const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            //send 400 error message if checks do not pass
+            return res.status(400).json({errors: errors.array()});
+        }
+    const {name, email, phone, type, address} = req.body;
+
+    try {
+        const newContact = new Contact({
+            name, 
+            email,
+            phone,
+            type,
+            address,
+            user: req.user.id
+        });
+
+        const contact = await newContact.save();
+        res.json(contact);
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 
