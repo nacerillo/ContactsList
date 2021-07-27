@@ -29,11 +29,10 @@ router.get('/',auth, async (req,res) => {
 });
 
 //@route     POST api/contacts
-// @desc     Add a user to contacts
-// @access   Public
+// @desc     Add a user to contacts  
+// @access   Public 
 
-router.post('/',[
-    auth,[check('name', 'Name is required').not().isEmpty()]],
+router.post('/',[auth,[check('name', 'Name is required').not().isEmpty()]],
     async (req,res) => {
     //res.send("Add contacts");
     const errors = validationResult(req);
