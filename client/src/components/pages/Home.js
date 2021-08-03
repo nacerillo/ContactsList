@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Contacts from "../contacts/Contacts";
 import ContactForm from "../contacts/ContactForm";
+import ContactFilter  from '../contacts/ContactFilter';
 import "../../App.css";
 export const Home = () => {
     return (
@@ -10,6 +11,7 @@ export const Home = () => {
             </div>
             
             <div>
+            <ContactFilter/>
             <Contacts/> 
             </div>     
         </div>
