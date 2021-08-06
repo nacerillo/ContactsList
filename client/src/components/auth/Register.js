@@ -1,22 +1,37 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import '../../App.css';
+import AlertContext from '../../context/alert/AlertContext';
 const Register = () => {
+    const alertContext = useContext(AlertContext);
+
+    const {setAlert} = alertContext;
     const [user,setUser] = useState({
         name: '',
         email: '',
         password: '',
         password2: ''
     })
-
+      const {name, email, password, password2} = user;
 const onChange = (e) =>{
     setUser({...user,[e.target.name]: e.target.value});
 }
 
 const onSubmit = (e) => {
     e.preventDefault();
-    console.log("register submit");
+ 
+    if(name === '' || email === '' || password === '') {
+           console.log("not filled submit");
+        setAlert("Please Enter All Fields", "danger");
+    }
+    else if(password !== password2){
+        setAlert("Passwords Do Not Match: No Match", "danger")
+    }
+    else{
+        console.log(name, email, password)
+        //console.log("Register Log");
+    }
 }
-    const {name, email, password, password2} = [user];
+  
     return (
         <div className = "form-container">
             <h1>
