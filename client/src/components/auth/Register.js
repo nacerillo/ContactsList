@@ -1,10 +1,14 @@
 import React, {useState, useContext} from 'react'
 import '../../App.css';
 import AlertContext from '../../context/alert/AlertContext';
+import AuthContext from '../../context/auth/AuthContext';
 const Register = () => {
     const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+
 
     const {setAlert} = alertContext;
+    const {registerUser} = authContext;
     const [user,setUser] = useState({
         name: '',
         email: '',
@@ -18,20 +22,25 @@ const onChange = (e) =>{
 
 const onSubmit = (e) => {
     e.preventDefault();
- 
+    console.log("SUBMIT TRIGGERED");
     if(name === '' || email === '' || password === '') {
            console.log("not filled submit");
         setAlert("Please Enter All Fields", "danger");
     }
     else if(password !== password2){
         setAlert("Passwords Do Not Match: No Match", "danger")
-    }
+    } 
     else{
+        registerUser({
+            name: name,
+            email: email,
+            password: password
+        });
         console.log(name, email, password)
         //console.log("Register Log");
     }
 }
-  
+   
     return (
         <div className = "form-container">
             <h1>
@@ -40,7 +49,7 @@ const onSubmit = (e) => {
             <form onSubmit = {onSubmit}>
                 <div className = "form-group">
                     <label htmlFor = "name">Name</label>
-                    <input type = "text" name = "name" value = {name} onChange = {onChange}/>
+                    <input type = "text" name = "name" value = {name} onChange = {onChange}  /> 
                 </div>
                 <div className = "form-group">
                     <label htmlFor = "email">Email</label>
@@ -48,7 +57,7 @@ const onSubmit = (e) => {
                 </div>
                 <div className = "form-group">
                     <label htmlFor = "password">Password</label>
-                    <input type = "password" name = "password" value = {password} onChange = {onChange}/>
+                    <input type = "password" name = "password"  minLength = "6" value = {password} onChange = {onChange} />
                 </div>      
                 <div className = "form-group">
                     <label htmlFor = "password2">Verify Password</label>
