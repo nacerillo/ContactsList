@@ -18,7 +18,7 @@ const AuthState = props => {
     const initialState = {
     //use local storage to store token
     user: null,
-    token: localStorage.getItem(''),
+    token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: true,
     error: null,
@@ -60,7 +60,7 @@ const AuthState = props => {
  //Clear Errors
 
  const clearErrors = () => {
-     console.log("oh hiiiiii");
+   dispatch({type: CLEAR_ERRORS});
  }
  
 
