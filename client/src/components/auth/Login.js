@@ -1,20 +1,53 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import '../../App.css';
-const Login = () => {
+import AuthContext from '../../context/auth/AuthContext';
+import AlertContext from '../../context/alert/AlertContext';
+//will set the State of the user equal to the state
+const Login = (props) => {
+    //bring in authentication and alert context
+    const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+    //bring in setAlert, loginUser, error, clearErrors, and isAuthentcated from authContext
+    const {setAlert} = alertContext;
+    const {loginUser, error, clearErrors, isAuthenticated} = authContext;
     const [user,setUser] = useState({
         email: '',
         password: '',
-    })
+    });
 
+//check to see if login user is authenticated
+useEffect(() => {
+    if(isAuthenticated){
+        props.history.push('/');
+    }
+    console.log(error);
+    if(error === 'Invalid Credentials'){
+        setAlert(error,'danger');
+        clearErrors();
+    }
+    }, [error, isAuthenticated,props.history]);
+
+//on input change will set user state equal to inputed data
+const {email, password} = user;
 const onChange = (e) =>{
     setUser({...user,[e.target.name]: e.target.value});
 }
 
+//submitting of login form
 const onSubmit = (e) => {
     e.preventDefault();
     console.log("Login Submit");
+    //check if login fields are filled
+    if(email === '' || password === ''){
+        setAlert('Please fill in all fields', 'danger');
+    } 
+    else{
+        loginUser({
+            email,
+            password
+        })
+    }
 }
-    const {email,password} = [user];
     return (
         <div className = "form-container">
             <h1>
