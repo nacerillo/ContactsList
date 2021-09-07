@@ -1,5 +1,6 @@
 import React, { useReducer} from "react";
 import {v4 as uuid} from "uuid";
+import axios from 'axios';
 import ContactContext from "./ContactContext";
 import ContactReducer from "./ContactReducer";
 import {
@@ -9,13 +10,14 @@ import {
     CLEAR_CURRENT,
     UPDATE_CONTACT,
     FILTER_CONTACTS,
-    CLEAR_FILTER
+    CLEAR_FILTER,
+    CONTACT_ERROR
 } from "../types";
 
 const ContactState = props => {
     const initialState = {
         contacts : [
-            {
+            /*{
                 id: 1,
                 name: "jill Johnson",
                 email: "jj@gmail.com",
@@ -38,20 +40,31 @@ const ContactState = props => {
                 phone: "333-333-3333",
                 type: "personal",
                 address: "9101 Roaders Rd"
-            }
+            }*/
 
         ],
         current: null,
-        filtered: null
+        filtered: null,
+        error: null
     };
 
  const [state, dispatch] = useReducer(ContactReducer, initialState)
 
  //Add Contact
-const addContact = contact => {
-    contact.id = uuid();
-    dispatch({type: ADD_CONTACT, payload: contact});
-
+const addContact = async (contact) => {
+   // contact.id = uuid();
+   const config = {
+       headers: {
+           'Content-Type': 'application/json'
+       }
+   }
+   //dont need to pass it token, because the token is created globally
+   try{
+    const res = await axios.post('/api/contacts',contact,config);
+    dispatch({type: ADD_CONTACT, payload: res.data});
+   }catch(err){
+        dispatch({type: CONTACT_ERROR, payload: err.message})
+   }
 }
  // Delete Contact
 const deleteContect = id => {
@@ -85,6 +98,7 @@ const clearFilter = () => {
             contacts: state.contacts, 
             current: state.current,
             filtered: state.filtered,
+            error: state.error,
             addContact, 
             updateContact,
             deleteContect, 
