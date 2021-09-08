@@ -27,14 +27,14 @@ const ContactState = props => {
 const [state, dispatch] = useReducer(ContactReducer, initialState)
 
 const getContacts = async () => {
-    try{
+    try {
       const res = await axios.get('/api/contacts');
       dispatch({
           type: GET_CONTACTS,
           payload: res.data
       });
     }
-    catch(err){
+    catch(err) {
         dispatch({
             type: CONTACT_ERROR,
             payload: err.response.message
@@ -51,20 +51,31 @@ const addContact = async (contact) => {
        }
    }
    //dont need to pass it token, because the token is created globally
-   try{
+   try {
     const res = await axios.post('/api/contacts',contact,config);
     dispatch({type: ADD_CONTACT, payload: res.data});
-   }catch(err){
+   }
+   catch(err) {
         dispatch({type: CONTACT_ERROR, payload: err.message})
    }
 }
  // Delete Contact
-const deleteContect = id => {
-        dispatch({type: DELETE_CONTACT, payload: id});
+const deleteContact = async id => {
+    try {
+        await axios.delete(`api/contacts/${id}`);
+         dispatch({type: DELETE_CONTACT, payload: id});
+    }
+    catch(err) {
+         dispatch({type: CONTACT_ERROR, payload: err.message})
+    }
+       // dispatch({type: DELETE_CONTACT, payload: id});
 }
 
+const clearContacts = () => {
+    dispatch({type: CLEAR_CONTACTS});
+}
  // Set Current Contact
-const setCurrent = contact => {
+const setCurrent = async (contact) => {
         dispatch({type: SET_CURRENT, payload: contact});
 }
  //Clear Current Contact
@@ -72,8 +83,20 @@ const clearCurrent = () => {
         dispatch({type: CLEAR_CURRENT});
 }
  //Update Current Contact
-const updateContact = contact => {
-        dispatch({type: UPDATE_CONTACT, payload: contact});
+const updateContact = async (contact) => {
+     const config = {
+       headers: {
+           'Content-Type': 'application/json'
+       }
+     }
+   try {
+        const res = await axios.put(`/api/contacts/${contact._id}`,contact,config);
+        dispatch({type: UPDATE_CONTACT, payload: res.data});
+   }
+   catch(err) {
+        dispatch({type: CONTACT_ERROR, payload: err.message})
+   }
+        //dispatch({type: UPDATE_CONTACT, payload: contact});
 }
  //Filter Contacts
 const filterContacts = (text) => {
@@ -94,7 +117,8 @@ const clearFilter = () => {
             addContact, 
             getContacts,
             updateContact,
-            deleteContect, 
+            deleteContact, 
+            clearContacts,
             setCurrent,
             clearFilter,
             filterContacts,
