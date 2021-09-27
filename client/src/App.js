@@ -11,8 +11,8 @@ import ContactState from './context/contact/ContactState';
 import PrivateRoute from './components/routing/PrivateRoute';
 import AuthState from './context/auth/AuthState';
 import setAuthToken from './utils/setAuthToken';
-import './App.css';
-
+//import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
  if(localStorage.token) {
          setAuthToken(localStorage.token);
      }
@@ -24,7 +24,7 @@ const App =() => {
       <Router>
         <Fragment>
           <Navbar/>
-          <div className = "container">
+          <div className = "container ms-auto">
             <Alerts/>
             <Switch>
               <PrivateRoute exact path = '/' component = {Home}/>

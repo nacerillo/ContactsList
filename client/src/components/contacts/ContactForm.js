@@ -58,17 +58,17 @@ const ContactForm = () => {
 
     return (
         <form onSubmit = {onSubmit}>
-            <h2 className = "text-primary">{current ? 'Edit Contact': 'Add Contact'}</h2>
-            <input type="text" placeholder = "name" name ="name" value = {name} onChange = {onChange}/>
-            <input type="email" placeholder = "Email" name ="email" value = {email} onChange = {onChange}/>
-            <input type="text" placeholder = "phone" name ="phone" value = {phone} onChange = {onChange}/>
-            <h5>Contact Types</h5>
-            <input type="radio"  name ="type" value = "personal" checked={type === 'personal'} onChange = {onChange}/>Personal{' '}
-            <input type="radio"  name ="type" value = "professional" checked = {type === 'professional'} onChange = {onChange}/>Professional{' '}
-            <h5>Address</h5>
-            <input type = "text" placeholder = "addess" name = "address" value = {address} onChange = {onChange}/>
+            <h2    className = "text-primary m-2 text-center">{current ? 'Edit Contact': 'Add Contact'}</h2>
+            <input className='m-2 ' type = "text" placeholder = "name" name ="name" value = {name} onChange = {onChange}/>
+            <input className='m-2 ' type="email" placeholder = "Email" name ="email" value = {email} onChange = {onChange}/>
+            <input className='m-2 ' type="text" placeholder = "phone" name ="phone" value = {phone} onChange = {onChange}/>
+            <h5    className='m-2 '>Contact Types</h5>
+            <input className='m-2 ' type="radio"  name ="type" value = "personal" checked={type === 'personal'} onChange = {onChange}/>Personal{' '}
+            <input className='m-2 ' type="radio"  name ="type" value = "professional" checked = {type === 'professional'} onChange = {onChange}/>Professional{' '}
+            <h5    className='m-2 ' >Address</h5>
+            <input className='m-2 ' type = "text" placeholder = "addess" name = "address" value = {address} onChange = {onChange}/>
             <div>
-                <input type = "submit" value = {current ? 'Edit Contact': 'Add Contact'} className = "btn btn-primary btn-block"/>
+                <input type = "submit" value = {current ? 'Edit Contact': 'Add Contact'} className = "m-2 p-1 btn btn-primary btn-block"/>
             </div>
            
                  {current && <div>'

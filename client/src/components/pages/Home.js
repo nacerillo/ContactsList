@@ -3,7 +3,7 @@ import Contacts from "../contacts/Contacts";
 import ContactForm from "../contacts/ContactForm";
 import ContactFilter  from '../contacts/ContactFilter';
 import AuthContext from '../../context/auth/AuthContext';
-import "../../App.css";
+//import "../../App.css";
 export const Home = () => {
     const authContext = useContext(AuthContext);
     useEffect(() => {
@@ -11,12 +11,12 @@ export const Home = () => {
         //eslint-disable-next-line
     },[]);
     return (
-        <div class = "grid-2">  
-            <div>
+        <div className = "row gx-5">  
+            <div className = 'col'>
             <ContactForm/>
             </div>
             
-            <div>
+            <div className = 'col'>
             <ContactFilter/>
             <Contacts/> 
             </div>     

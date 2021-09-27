@@ -24,6 +24,7 @@ import ContactContext from '../../context/contact/ContactContext'
     //useREf == used to refernce a dom object directly
     return (
         <form>
+            <h2    className = "text-primary text-center">Search</h2>
             <input ref ={text} type = "text" placeholder = "search for contact" onChange = {onChange}></input>
         </form>
     )
