@@ -1,0 +1,41 @@
+{
+  "name": "ContactsList",
+  "version": "1.0.0",
+  "description": "practice MERN application that keeps track of a list of contacts",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "client-install": "npm install  --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nacerillo/ContactsList.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nacerillo/ContactsList/issues"
+  },
+  "homepage": "https://github.com/nacerillo/ContactsList#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.1.1",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.3",
+    "react-bootstrap": "^2.0.0-rc.0",
+    "react-transition-group": "^4.4.2",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "proxy": "http://localhost:5000"
+}
