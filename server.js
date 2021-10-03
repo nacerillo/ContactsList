@@ -11,8 +11,7 @@ connectDB();
 // Init Middleware
 //exepting json body data
 app.use(express.json({extended: false}));
-app.get('/', (req,res) => res.json({msg : `Welcome to the Rice Fields MotherLovers!`})
-);
+
 
 //Application Routes
 app.use('/api/users', require('./routes/users'));
